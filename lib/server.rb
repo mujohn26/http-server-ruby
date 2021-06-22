@@ -1,5 +1,6 @@
 require 'socket'
 require_relative './response.rb'
+require_relative './detail_route.rb'
 require 'ostruct'
 
 
@@ -14,7 +15,7 @@ class Server
       :path=> path,
       :handler=> handler
     }
-    @routes.push(data)
+    @routes.push(data_object)
   end
 
 
@@ -27,12 +28,28 @@ class Server
    request<<line.chomp
    end
    http_method, path,protocol = request[0].split(' ') 
-   request = @routes.select {|v| v[:path] == path}
-   handler_object = OpenStruct.new(request[0])
-   handler_instance = handler_object.handler.new
-   response = Response.new
-   response.print_response(handler_instance.create_response,client)
-   client.close
+   
+  if (path.include?("&"))
+    detail = DetailRoute.new
+    deatail_object= OpenStruct.new(detail.name_occupation_getter(path))
+    response = Response.new
+    response.print_response(detail.create_response(deatail_object.name,deatail_object.occupation),client)
+     client.close   
+  else
+    
+    request = @routes.select {|v| v[:path] == path}
+    handler_object = OpenStruct.new(request[0])
+    handler_instance = handler_object.handler.new
+    if(path == '/image')
+    handler_instance.create_response client
+     client.close
+    else
+    response = Response.new
+    response.print_response(handler_instance.create_response,client)
+     client.close
+     end
+  end
+  
   
 end
     # start the client and save a ref to it
