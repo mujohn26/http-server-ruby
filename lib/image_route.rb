@@ -1,13 +1,17 @@
+require 'mime-types'
+# image route class
 class ImageRoute
-    def create_response(client, filepath = '/Users/john/Documents/kata/http-server-ruby/public/cat.jpeg' mime_type='image/jpeg')
-        file = File.binread filepath
-        client.puts "HTTP/1.1 200 OK\r\n" 
-        client.puts "Content-Type:  #{mime_type}\r\n"
-        client.puts "Content-Length: #{file.length}" 
-        client.puts "" 
-        client.puts file   
+  def initialize(path)
+    @path = path
+    @mime_type = MIME::Types.type_for(path)[0]
+  end
 
-        return nil
-    end
-
+  def create_response
+    file = File.binread @path
+    {
+      status: 'HTTP/1.1 200 OK',
+      type: @mime_type,
+      message: file
+    }
+  end
 end

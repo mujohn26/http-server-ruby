@@ -1,15 +1,15 @@
 require 'rubygems'
 require 'rspec'
 require 'socket'
-require_relative "../lib/post_index_route.rb"
+require_relative '../lib/post_index_route'
 
 describe PostIndexRoute do
-it "Returns current on / route" do
-  post_index_route = PostIndexRoute.new 
-  return_data= {
-            :status=> "HTTP/1.1 200 OK",
-            :type=> 'text/html',
-            :message=> "
+  it 'Returns current on / route' do
+    post_index_route = PostIndexRoute.new
+    return_data = {
+      status: 'HTTP/1.1 200 OK',
+      type: 'text/html',
+      message: "
             <html>
             <title>form</title>
             <body>
@@ -23,8 +23,8 @@ it "Returns current on / route" do
             </body>
             </html>"
 
-        } 
+    }
 
-  expect(post_index_route.create_response).to eq(return_data)
-end
+    expect(post_index_route.create_response).to eq(return_data)
+  end
 end

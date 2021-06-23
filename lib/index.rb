@@ -1,16 +1,17 @@
-require_relative "./server.rb"
-require_relative "./index_route.rb"
-require_relative "./time_route.rb"
-require_relative "./post_index_route.rb"
-require_relative "./image_route.rb"
+require_relative './server'
+require_relative './index_route'
+require_relative './time_route'
+require_relative './post_index_route'
+require_relative './image_route'
+require_relative './directory_route'
 
 server = Server.new 9000
 
-server.add_route "GET", "/index", IndexRoute
-server.add_route "GET", "/time", TimeRoute
-server.add_route "POST", "/", PostIndexRoute
-server.add_route "GET", "/image", ImageRoute
-
-
+server.add_route 'GET', '/index', IndexRoute.new
+server.add_route 'GET', '/time', TimeRoute.new
+server.add_route 'POST', '/', PostIndexRoute.new
+server.add_route 'GET', '/image', ImageRoute.new('/Users/john/Documents/kata/http-server-ruby/public/cat.png')
+server.add_route 'GET', '/image2', ImageRoute.new('/Users/john/Documents/kata/http-server-ruby/public/cat.jpg')
+server.add_route 'GET', '/directory', DirectoryRoute.new('/Users/john/Documents/kata/http-server-ruby/public/')
 
 server.start
