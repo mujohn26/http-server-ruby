@@ -1,16 +1,13 @@
+require 'ostruct'
+
 class DetailRoute
-  def create_response(name, occupation)
+  def create_response(query_string)
+    query_string_data= OpenStruct.new(query_string)
     {
       status: 'HTTP/1.1 200 OK',
       type: 'text/html',
-      message: "<html><title>detail</title><body><h1>Hello #{name}, the #{occupation}</h1></body></html>"
+      message: "<html><title>detail</title><body><h1>Hello #{query_string_data.name}, the #{query_string_data.occupation}</h1></body></html>"
     }
   end
 
-  def name_occupation_getter(path)
-    {
-      name: path.split('&')[0].split('=')[1],
-      occupation: path.split('&')[1].split('=')[1]
-    }
-  end
 end

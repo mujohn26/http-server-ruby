@@ -22,12 +22,12 @@ message = {
   type: 'image/jpeg',
   message: file
 }
-response = Response.new(message, client)
-response.print_response
+response = Response.new(client)
+response.print_response message
 
 describe Response do
   it 'returns nil from create_response' do
-    expect(response.print_response).to eq(nil)
+    expect(response.print_response(message)).to eq(nil)
   end
 
   it 'writes the response line to client' do

@@ -5,7 +5,7 @@ class DirectoryRoute
     @path = path
   end
 
-  def create_response
+  def create_response(_query_string)
     response = ''
     Dir.foreach(@path) do |file|
       response << "#{file}\n"

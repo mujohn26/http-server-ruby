@@ -1,6 +1,6 @@
 # time route class
 class TimeRoute
-  def create_response
+  def create_response(_query_string)
     {
       status: 'HTTP/1.1 200 OK',
       type: 'text/html',

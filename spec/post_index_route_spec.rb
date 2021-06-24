@@ -25,6 +25,6 @@ describe PostIndexRoute do
 
     }
 
-    expect(post_index_route.create_response).to eq(return_data)
+    expect(post_index_route.create_response(nil)).to eq(return_data)
   end
 end

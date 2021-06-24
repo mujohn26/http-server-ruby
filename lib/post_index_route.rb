@@ -1,9 +1,10 @@
+#post index route
 class PostIndexRoute
-    def create_response 
-        {
-            :status=> "HTTP/1.1 200 OK",
-            :type=> 'text/html',
-            :message=> "
+  def create_response(_query_string)
+    {
+      status: 'HTTP/1.1 200 OK',
+      type: 'text/html',
+      message: "
             <html>
             <title>form</title>
             <body>
@@ -17,8 +18,6 @@ class PostIndexRoute
             </body>
             </html>"
 
-        }        
-    end
-    
-
+    }
+  end
 end
