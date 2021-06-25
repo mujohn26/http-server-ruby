@@ -1,6 +1,6 @@
 #index route class
 class IndexRoute
-  def create_response(_query_string)
+  def create_response(_query_string,_path)
     {
       status: 'HTTP/1.1 200 OK',
       type: 'text/html',

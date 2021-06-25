@@ -1,6 +1,6 @@
 #post index route
 class PostIndexRoute
-  def create_response(_query_string)
+  def create_response(_query_string,_path)
     {
       status: 'HTTP/1.1 200 OK',
       type: 'text/html',
@@ -12,8 +12,8 @@ class PostIndexRoute
             <label for='name'>Name:</label><br>
             <input type='text' id='name' name='name'><br><br>
             <label for='occupation'>Occupation:</label><br>
-            <input type='text' id='occupation' name='occupation'><br><br>
-            <input type='submit' value='Submit'>
+            <input type='text' id='occupation' name='occupation class='occupation'><br><br>
+            <a href='/hello?name=#name&occupation=#occupation' >Submit</a>
             </form>
             </body>
             </html>"

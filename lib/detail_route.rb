@@ -1,7 +1,7 @@
 require 'ostruct'
 
 class DetailRoute
-  def create_response(query_string)
+  def create_response(query_string, _path)
     query_string_data= OpenStruct.new(query_string)
     {
       status: 'HTTP/1.1 200 OK',

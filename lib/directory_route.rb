@@ -5,15 +5,27 @@ class DirectoryRoute
     @path = path
   end
 
-  def create_response(_query_string)
+  def create_response(_query_string,_path)
     response = ''
     Dir.foreach(@path) do |file|
-      response << "#{file}\n"
+      response << "<li><a href='../public/#{file}'>#{file}</a></li>"
     end
+
     {
       status: 'HTTP/1.1 200 OK',
       type: 'text/html',
-      message: "<html><title>index</title><body><h4>#{response}</h4></body></html>"
+      message: <<-EOF
+        <html>
+          <head>
+          <title>index</title>
+          </head>
+          <body>
+            <ul>
+              <h4>#{response}</h4>
+            </ul>
+          </body>
+        </html>
+EOF
     }
   end
 end
