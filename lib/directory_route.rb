@@ -5,7 +5,7 @@ class DirectoryRoute
     @path = path
   end
 
-  def create_response(_query_string,_path)
+  def create_response(_request)
     response = ''
     Dir.foreach(@path) do |file|
       response << "<li><a href='../public/#{file}'>#{file}</a></li>"

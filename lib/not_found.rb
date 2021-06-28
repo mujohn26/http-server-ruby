@@ -1,6 +1,6 @@
 # time route class
 class NotFound
-  def create_response(_query_string,_path)
+  def create_response(_request)
     {
       status: 'HTTP/1.1 404 OK',
       type: 'text/html',

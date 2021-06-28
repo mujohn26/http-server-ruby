@@ -6,7 +6,7 @@ class ImageRoute
     @mime_type = MIME::Types.type_for(path)[0]
   end
 
-  def create_response(_query_string,_path)
+  def create_response(_request)
     file = File.binread @path
     {
       status: 'HTTP/1.1 200 OK',

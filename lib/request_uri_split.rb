@@ -1,6 +1,10 @@
-class Addressable
-  def uri(uri_string)
-    splited_uri_string = uri_string.split('?')
+class RequestUriSplit
+  def initialize(request_string)
+    @uri_string = request_string
+  end
+
+  def uri
+    splited_uri_string = @uri_string.split('?')
     query_values = splited_uri_string[1].nil? ? nil : split_query_string(splited_uri_string[1])
     path = splited_uri_string[0]
     {

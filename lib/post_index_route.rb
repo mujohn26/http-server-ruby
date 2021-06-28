@@ -1,6 +1,6 @@
-#post index route
+# post index route
 class PostIndexRoute
-  def create_response(_query_string,_path)
+  def create_response(_request)
     {
       status: 'HTTP/1.1 200 OK',
       type: 'text/html',

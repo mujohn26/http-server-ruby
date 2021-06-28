@@ -1,8 +1,9 @@
 require 'socket'
 require_relative './response'
 require_relative './detail_route'
-require_relative './request'
+require_relative './route'
 require_relative './parse_string'
+require_relative './request_parser'
 require 'ostruct'
 
 # server class
@@ -24,15 +25,16 @@ class Server
     server = TCPServer.new @port
     loop do
       client = server.accept
-      request = []
+      request_parser = RequestParser.new
       while (line = client.gets) && !line.chomp.empty?
-        request << line.chomp
+        request_parser.add_line line.chomp
       end
-      _http_method, request_uri, _protocol = request[0].split(' ')
-      uri_parser = UriParser.new
-      parsed_object = OpenStruct.new(uri_parser.request_uri_parser(request_uri))
-      request = Request.new(client)
-      request.make(@routes, parsed_object.path, parsed_object.query_string)
+      request = request_parser.generate_request
+      route = Route.new
+      handler_instance = route.get_handler(@routes, request)
+      message = handler_instance.create_response(request)
+      response = Response.new(client)
+      response.print_response(message)
       client.close
     end
   end
