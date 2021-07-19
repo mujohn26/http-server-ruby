@@ -2,40 +2,43 @@ require 'socket'
 require_relative './response'
 require_relative './detail_route'
 require_relative './route'
-require_relative './parse_string'
 require_relative './request_parser'
+require_relative './request.rb'
 require 'ostruct'
+require 'http/parser'
 
-# server class
 class Server
   def initialize(port)
     @port = port
     @routes = []
   end
 
-  def add_route(_method, path, handler)
+  def add_route(method, path, handler)
     data_object = {
       path: path,
-      handler: handler
+      handler: handler,
+      method: method
     }
     @routes.push(data_object)
   end
 
   def start
-    server = TCPServer.new @port
-    loop do
-      client = server.accept
-      request_parser = RequestParser.new
-      while (line = client.gets) && !line.chomp.empty?
-        request_parser.add_line line.chomp
-      end
-      request = request_parser.generate_request
-      route = Route.new
-      handler_instance = route.get_handler(@routes, request)
-      message = handler_instance.create_response(request)
-      response = Response.new(client)
-      response.print_response(message)
-      client.close
-    end
+  server = TCPServer.new @port
+
+  print("Server running on #{@port}")
+  loop do
+    socket = server.accept
+    socket.setsockopt(Socket::IPPROTO_TCP, Socket::TCP_NODELAY, 1)
+    request = Request.new(socket)
+    request.handle
+
+    route = Route.new
+    handler_instance = route.get_handler(@routes, request)
+    message = handler_instance.create_response(request)
+    response = Response.new(socket)
+    response.print_response(message)
+    socket.close
+  end
+
   end
 end

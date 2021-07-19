@@ -8,15 +8,15 @@ class PostIndexRoute
             <html>
             <title>form</title>
             <body>
-            <form  method='get'>
+            <form  method='post' action='/form'>
             <label for='name'>Name:</label><br>
             <input type='text' id='name' name='name'><br><br>
             <label for='occupation'>Occupation:</label><br>
-            <input type='text' id='occupation' name='occupation class='occupation'><br><br>
-            <a href='/hello?name=#name&occupation=#occupation' >Submit</a>
+            <input type='text' id='occupation' name='occupation' class='occupation'><br><br>
+            <button type='submit'>Submit button</button>
             </form>
             </body>
-            </html>"
+            </html>" 
 
     }
   end

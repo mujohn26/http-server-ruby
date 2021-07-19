@@ -1,20 +1,15 @@
-require_relative './parse_string'
+
 class RequestParser
-  def initialize
-    @line = []
+  def split_params(params)
+    query_values = {}
+    params.split('&').map.with_index do |value, _index|
+      query_value = value.split('=')
+      query_values[query_value[0]] = query_value[1].nil? ? '' : query_value[1]
+    end
+
+    query_values
   end
 
-  def add_line(chomp)
-    @line.push(chomp)
-  end
-
-  def generate_request
-    _http_method, request_uri, _protocol = @line[0].split(' ')
-    uri_parser = UriParser.new
-    parsed_object = uri_parser.request_uri_parser(request_uri)
-    {
-      path: parsed_object[:path],
-      query_string: parsed_object[:query_string]
-    }
-  end
 end
+
+# 
